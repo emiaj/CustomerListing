@@ -1,0 +1,33 @@
+﻿@model dynamic
+@{
+    ViewBag.Title = "title";
+}
+
+<h2>Customer Listing</h2>
+
+<input type="text" id="name" placeholder="Type in customer name..." />
+<input type="button" value="Search Customer" onclick="submitQuery()" />
+<input type="button" value="Clear Results" onclick="clearResults()" />
+<div>
+    Results
+</div>
+<div id="results"></div>
+@section scripts {
+
+    <script>
+
+        function submitQuery() {
+            var name = $("#name").val();
+            $.get("/Customer/Find",
+                {
+                    name: name
+                },
+                function (data) {
+                    $("#results").prepend("<hr/><div>" + JSON.stringify(data) + "</div>");
+                });
+        }
+        function clearResults() {
+            $("#results").html("");
+        }
+    </script>
+}
